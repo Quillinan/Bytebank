@@ -22,15 +22,11 @@ describe("Deve retornar o valor do saldo", () => {
     expect(calculaRendimento).toBeCalledWith(saldo);
   });
   test("Aumentar no depósito", () => {
-    const calculaSaldo = jest.fn(calculaNovoSaldo);
-
-    const novoSaldo = calculaSaldo(listaDeTransações[0], saldo);
+    const novoSaldo = calculaNovoSaldo(listaDeTransações[0], saldo);
     expect(novoSaldo).toBe(150);
   });
   test("Diminuir na transferência", () => {
-    const calculaSaldo = jest.fn(calculaNovoSaldo);
-
-    const novoSaldo = calculaSaldo(listaDeTransações[1], saldo);
+    const novoSaldo = calculaNovoSaldo(listaDeTransações[1], saldo);
     expect(novoSaldo).toBe(50);
   });
 });
