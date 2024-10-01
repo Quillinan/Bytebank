@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Deve renderizar o nome do usuário logado 1`] = `
+<p>
+  Joana Fonseca Gomes
+</p>
+`;
