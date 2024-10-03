@@ -1,36 +1,30 @@
-import { render, screen } from "@testing-library/react";
-import Transacoes from ".";
-import estilos from "../Extrato.module.css";
+import { render, screen } from '@testing-library/react';
+import Transacoes from './index';
+import estilos from '../Extrato.module.css';
 
-describe("Deve renderizar o mesmo componente", () => {
+test('Deve renderizar o mesmo componente com props atualizadas', () => {
   const transacao = {
-    transacao: "Depósito",
+    transacao: 'Depósito',
     valor: 100,
   };
+  const { rerender } = render(
+    <Transacoes estilos={estilos} transacao={transacao} />
+  );
+  const tipoTransacao = screen.getByTestId('tipoTransacao');
+  const valorTransacao = screen.getByTestId('valorTransacao');
+
+  expect(tipoTransacao).toHaveTextContent('Depósito');
+  expect(valorTransacao).toHaveTextContent('R$ 100');
 
   const novaTransacao = {
-    transacao: "Transferência",
+    transacao: 'Transferência',
     valor: 50,
   };
 
-  test("Com props atualizadas", () => {
-    render(<Transacoes transacao={transacao} estilos={estilos} />);
-    const tipoTransacao = screen.getByTestId("tipoTransacao");
-    const valorTransacao = screen.getByTestId("valorTransacao");
+  rerender(<Transacoes estilos={estilos} transacao={novaTransacao} />);
+  const novoTipoTransacao = screen.getByTestId('tipoTransacao');
+  const novoValorTransacao = screen.getByTestId('valorTransacao');
 
-    expect(tipoTransacao).toHaveTextContent("Depósito");
-    expect(valorTransacao).toHaveTextContent("R$ 100");
-  });
-  test("Com props atualizadas via rerender", () => {
-    const { rerender } = render(
-      <Transacoes transacao={transacao} estilos={estilos} />
-    );
-
-    rerender(<Transacoes transacao={novaTransacao} estilos={estilos} />);
-    const novoTipoTransacao = screen.getByTestId("tipoTransacao");
-    const novoValorTransacao = screen.getByTestId("valorTransacao");
-
-    expect(novoTipoTransacao).toHaveTextContent("Transferência");
-    expect(novoValorTransacao).toHaveTextContent("- R$ 50");
-  });
+  expect(novoTipoTransacao).toHaveTextContent('Transferência');
+  expect(novoValorTransacao).toHaveTextContent('- R$ 50');
 });

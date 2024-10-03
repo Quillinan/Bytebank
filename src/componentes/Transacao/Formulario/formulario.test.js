@@ -1,34 +1,34 @@
-import { render, screen } from "@testing-library/react";
-import Formulario from ".";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Formulario from './index';
 
-describe("Deve renderizar um campo de input", () => {
-  test("No documento", () => {
+describe('Deve renderizar um campo de input', () => {
+  test('no documento', () => {
     render(<Formulario />);
-    const campoTexto = screen.getByPlaceholderText("Digite um valor");
+    const campoTexto = screen.getByPlaceholderText('Digite um valor');
     expect(campoTexto).toBeInTheDocument();
   });
 
-  test("Com o type number", () => {
+  test(' com o type number', () => {
     render(<Formulario />);
-    const campoTexto = screen.getByPlaceholderText("Digite um valor");
-    expect(campoTexto).toHaveAttribute("type", "number");
+    const campoTexto = screen.getByPlaceholderText('Digite um valor');
+    expect(campoTexto).toHaveAttribute('type', 'number');
   });
 
-  test("Que pode ser preenchido", () => {
+  test(' que pode ser preenchido', () => {
     render(<Formulario />);
-    const campoTexto = screen.getByPlaceholderText("Digite um valor");
-    userEvent.type(campoTexto, "50");
+    const campoTexto = screen.getByPlaceholderText('Digite um valor');
+    userEvent.type(campoTexto, '50');
     expect(campoTexto).toHaveValue(50);
   });
 });
 
-describe("Deve chamar um evento de onSubmit", () => {
+test('Deve chamar um evento de onSubmit ao clicar em realizar transação', () => {
   const realizarTransacao = jest.fn();
-  test("Ao clicar em realizar transação", () => {
-    render(<Formulario realizarTransacao={realizarTransacao} />);
-    const botao = screen.getByRole("button");
-    userEvent.click(botao);
-    expect(realizarTransacao).toHaveBeenCalledTimes(1);
-  });
+
+  render(<Formulario realizarTransacao={realizarTransacao} />);
+  const botao = screen.getByRole('button');
+
+  userEvent.click(botao);
+  expect(realizarTransacao).toHaveBeenCalledTimes(1);
 });

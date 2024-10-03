@@ -1,32 +1,37 @@
-import { calculaNovoSaldo } from ".";
+import { calculaNovoSaldo } from './index';
 
-describe("Deve retornar o valor do saldo", () => {
-  const saldo = 100;
-
-  const listaDeTransações = [
-    {
-      transacao: "Depósito",
+describe('Quando eu realizo uma transação', () => {
+  it('Que é um depósito, o saldo deve aumentar', () => {
+    const transacao = {
+      transacao: 'Depósito',
       valor: 50,
-    },
-    {
-      transacao: "Transferência",
-      valor: 50,
-    },
-  ];
-  test("Atualizado com o rendimento", () => {
-    const calculaRendimento = jest.fn((saldo) => saldo + saldo * 0.005);
-    const novoSaldo = calculaRendimento(saldo);
+    };
 
-    expect(novoSaldo).toBe(100.5);
-    expect(calculaRendimento).toBeCalled();
-    expect(calculaRendimento).toBeCalledWith(saldo);
-  });
-  test("Aumentar no depósito", () => {
-    const novoSaldo = calculaNovoSaldo(listaDeTransações[0], saldo);
+    const novoSaldo = calculaNovoSaldo(transacao, 100);
+
     expect(novoSaldo).toBe(150);
   });
-  test("Diminuir na transferência", () => {
-    const novoSaldo = calculaNovoSaldo(listaDeTransações[1], saldo);
+
+  test('Que é uma Transferência, o saldo deve diminuir', () => {
+    const transacao = {
+      transacao: 'Tranferência',
+      valor: 50,
+    };
+
+    const novoSaldo = calculaNovoSaldo(transacao, 100);
+
     expect(novoSaldo).toBe(50);
   });
+});
+
+it('Deve retornar o valor do saldo atualizado com o rendimento', () => {
+  const calculaRendimento = jest.fn((saldo) => saldo + saldo * 0.005);
+
+  const saldo = 100;
+
+  const novoSaldo = calculaRendimento(saldo);
+
+  expect(novoSaldo).toBe(100.5);
+  expect(calculaRendimento).toBeCalled();
+  expect(calculaRendimento).toHaveBeenCalledWith(saldo);
 });
